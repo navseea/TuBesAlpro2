@@ -14,6 +14,7 @@ type Capaian struct {
 	DeskripsiProgres   string
 	SkorStres          int
 	SkorMood           int
+	CatatanPerasaan    string
 }
 
 type ArrCapaian [1000]Capaian
@@ -109,6 +110,9 @@ func SelesaikanTugas(A *ArrCapaian, n int) {
 	
 	fmt.Print("Deskripsi Progres : ")
 	A[idx].DeskripsiProgres = bacaString()
+
+	fmt.Print("Catatan Perasaan  : ") // <-- TAMBAHAN BARU
+	A[idx].CatatanPerasaan = bacaString()
 	
 	fmt.Print("Skor Stres (1-10) : ")
 	fmt.Scan(&A[idx].SkorStres)
@@ -266,8 +270,17 @@ func TampilkanSemuaData(A ArrCapaian, n int) {
 		if A[i].IsSelesai {
 			status = "Selesai"
 		}
-		fmt.Printf("%d. [%s] %s | Tgl: %s | Prioritas: %d | Stres: %d | Mood: %d\n", 
-			i+1, status, A[i].NamaTugas, A[i].TanggalSelesai, A[i].TingkatKepentingan, A[i].SkorStres, A[i].SkorMood)
+		
+		// Cetak informasi dasar
+		fmt.Printf("%d. [%s] %s | Tgl: %s | Prioritas: %d\n", 
+			i+1, status, A[i].NamaTugas, A[i].TanggalSelesai, A[i].TingkatKepentingan)
+		
+		// Cetak informasi tambahan jika tugas sudah diselesaikan
+		if A[i].IsSelesai {
+			fmt.Printf("   - Stres: %d/10 | Mood: %d/10\n", A[i].SkorStres, A[i].SkorMood)
+			fmt.Printf("   - Progres  : %s\n", A[i].DeskripsiProgres)
+			fmt.Printf("   - Perasaan : %s\n", A[i].CatatanPerasaan)
+		}
 	}
 }
 
