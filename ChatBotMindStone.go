@@ -18,7 +18,7 @@ type Capaian struct {
 
 type ArrCapaian [1000]Capaian
 
-// Fungsi pembantu murni ALPRO: Membaca string berspasi karakter demi karakter
+// Fungsi pembantu : Membaca string berspasi karakter demi karakter
 func bacaString() string {
 	var hasil string
 	var char byte
@@ -164,8 +164,8 @@ func urutkanTanggalInternal(A *ArrCapaian, n int) {
 	}
 }
 
-func CariBerdasarkanTanggal(A ArrCapaian, n int, target string) int {
-	urutkanTanggalInternal(&A, n)
+func CariBerdasarkanTanggal(A *ArrCapaian, n int, target string) int {
+	urutkanTanggalInternal(A, n)
 	low := 0
 	high := n - 1
 	
@@ -241,7 +241,6 @@ func TampilkanStatistikMingguan(A ArrCapaian, n int) {
 	fmt.Printf("\n=== STATISTIK MINGGU (%s - %s) ===\n", tanggalAwal, tanggalAkhir)
 	
 	if jumlahTugasSelesaiMingguIni > 0 {
-		// Menggunakan float64 agar pembagian menghasilkan angka desimal yang benar
 		rataRataStres := float64(totalSkorStres) / float64(jumlahTugasSelesaiMingguIni)
 		fmt.Printf("Rata-rata Skor Stres                 : %.2f\n", rataRataStres)
 	} else {
@@ -299,7 +298,6 @@ func main() {
 		fmt.Print("Pilih menu: ")
 		fmt.Scan(&pilihan)
 
-		// Rantai if - else if klasik, sesuai aturan dasar
 		if pilihan == 1 {
 			TambahData(&DataCapaian, &totalData)
 		} else if pilihan == 2 {
@@ -321,7 +319,9 @@ func main() {
 			fmt.Print("\nMasukkan tanggal (YYYYMMDD) yang dicari: ")
 			var target string
 			fmt.Scan(&target)
-			idx := CariBerdasarkanTanggal(DataCapaian, totalData, target)
+            
+			idx := CariBerdasarkanTanggal(&DataCapaian, totalData, target) 
+            
 			if idx != -1 {
 				fmt.Printf("Ditemukan! Salah satu tugas di tanggal tersebut adalah: %s\n", DataCapaian[idx].NamaTugas)
 			} else {
