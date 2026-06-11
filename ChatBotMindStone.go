@@ -111,7 +111,7 @@ func SelesaikanTugas(A *ArrCapaian, n int) {
 	fmt.Print("Deskripsi Progres : ")
 	A[idx].DeskripsiProgres = bacaString()
 
-	fmt.Print("Catatan Perasaan  : ") // <-- TAMBAHAN BARU
+	fmt.Print("Catatan Perasaan  : ")
 	A[idx].CatatanPerasaan = bacaString()
 	
 	fmt.Print("Skor Stres (1-10) : ")
