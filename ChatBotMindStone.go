@@ -54,7 +54,7 @@ func initDummy(A *ArrCapaian, n *int) {
 		{
 			NamaTugas:          "Presentasi Proyek Kelompok",
 			TingkatKepentingan: 5,
-			TanggalSelesai:     "20250614",
+			TanggalSelesai:     "20260614",
 			IsSelesai:          false,
 			DeskripsiProgres:   "",
 			SkorStres:          0,
