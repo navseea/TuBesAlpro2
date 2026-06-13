@@ -19,11 +19,15 @@ type Capaian struct {
 
 type ArrCapaian [1000]Capaian
 
+func initDummy(A *ArrCapaian, n int) {
+
+}
+
 // Fungsi pembantu : Membaca string berspasi karakter demi karakter
 func bacaString() string {
 	var hasil string
 	var char byte
-	
+
 	// Loop 1: Lewati sisa "Enter" (\n) atau spasi kosong dari input menu sebelumnya
 	for {
 		fmt.Scanf("%c", &char)
@@ -32,7 +36,7 @@ func bacaString() string {
 			break
 		}
 	}
-	
+
 	// Loop 2: Baca sisa karakternya satu per satu sampai ditekan "Enter" lagi
 	for {
 		fmt.Scanf("%c", &char)
@@ -41,7 +45,7 @@ func bacaString() string {
 		}
 		hasil = hasil + string(char)
 	}
-	
+
 	return hasil
 }
 
@@ -54,17 +58,17 @@ func TambahData(A *ArrCapaian, n *int) {
 		fmt.Println("Kapasitas penyimpanan penuh!")
 		return
 	}
-	
+
 	fmt.Println("\n--- TAMBAH TUGAS BARU ---")
 	fmt.Print("Nama Tugas           : ")
 	A[*n].NamaTugas = bacaString()
-	
+
 	fmt.Print("Tingkat Kepentingan (1-5): ")
 	fmt.Scan(&A[*n].TingkatKepentingan)
-	
+
 	fmt.Print("Target Tanggal (YYYYMMDD): ")
 	fmt.Scan(&A[*n].TanggalSelesai)
-	
+
 	A[*n].IsSelesai = false
 	*n = *n + 1
 	fmt.Println("Data berhasil ditambahkan.")
@@ -74,19 +78,19 @@ func UbahData(A *ArrCapaian, n int) {
 	fmt.Println("\n--- UBAH DATA TUGAS ---")
 	fmt.Print("Masukkan Nama Tugas yang ingin diubah: ")
 	target := bacaString()
-	
+
 	idx := CariBerdasarkanNama(*A, n, target)
 	if idx == -1 {
 		fmt.Println("Tugas tidak ditemukan.")
 		return
 	}
-	
+
 	fmt.Print("Nama Tugas Baru           : ")
 	A[idx].NamaTugas = bacaString()
-	
+
 	fmt.Print("Tingkat Kepentingan (1-5) : ")
 	fmt.Scan(&A[idx].TingkatKepentingan)
-	
+
 	fmt.Print("Target Tanggal (YYYYMMDD) : ")
 	fmt.Scan(&A[idx].TanggalSelesai)
 	fmt.Println("Data berhasil diubah.")
@@ -96,30 +100,30 @@ func SelesaikanTugas(A *ArrCapaian, n int) {
 	fmt.Println("\n--- SELESAIKAN TUGAS ---")
 	fmt.Print("Masukkan Nama Tugas: ")
 	target := bacaString()
-	
+
 	idx := CariBerdasarkanNama(*A, n, target)
 	if idx == -1 {
 		fmt.Println("Tugas tidak ditemukan.")
 		return
 	}
-	
+
 	if A[idx].IsSelesai {
 		fmt.Println("Tugas ini sudah diselesaikan sebelumnya.")
 		return
 	}
-	
+
 	fmt.Print("Deskripsi Progres : ")
 	A[idx].DeskripsiProgres = bacaString()
 
 	fmt.Print("Catatan Perasaan  : ")
 	A[idx].CatatanPerasaan = bacaString()
-	
+
 	fmt.Print("Skor Stres (1-10) : ")
 	fmt.Scan(&A[idx].SkorStres)
-	
+
 	fmt.Print("Skor Mood (1-10)  : ")
 	fmt.Scan(&A[idx].SkorMood)
-	
+
 	A[idx].IsSelesai = true
 	fmt.Println("Selamat! Tugas berhasil diselesaikan.")
 }
@@ -128,13 +132,13 @@ func HapusData(A *ArrCapaian, n *int) {
 	fmt.Println("\n--- HAPUS TUGAS ---")
 	fmt.Print("Masukkan Nama Tugas yang akan dihapus: ")
 	target := bacaString()
-	
+
 	idx := CariBerdasarkanNama(*A, *n, target)
 	if idx == -1 {
 		fmt.Println("Tugas tidak ditemukan.")
 		return
 	}
-	
+
 	// Menggeser array ke kiri untuk menutup celah
 	for i := idx; i < *n-1; i++ {
 		A[i] = A[i+1]
@@ -172,7 +176,7 @@ func CariBerdasarkanTanggal(A *ArrCapaian, n int, target string) int {
 	urutkanTanggalInternal(A, n)
 	low := 0
 	high := n - 1
-	
+
 	for low <= high {
 		mid := (low + high) / 2
 		if A[mid].TanggalSelesai == target {
@@ -190,7 +194,7 @@ func CariBerdasarkanTanggal(A *ArrCapaian, n int, target string) int {
 func UrutkanKepentingan(A *ArrCapaian, n int) {
 	for i := 0; i < n-1; i++ {
 		maxIdx := i
-		for j := i+1; j < n; j++ {
+		for j := i + 1; j < n; j++ {
 			if A[j].TingkatKepentingan > A[maxIdx].TingkatKepentingan {
 				maxIdx = j
 			}
@@ -243,7 +247,7 @@ func TampilkanStatistikMingguan(A ArrCapaian, n int) {
 	}
 
 	fmt.Printf("\n=== STATISTIK MINGGU (%s - %s) ===\n", tanggalAwal, tanggalAkhir)
-	
+
 	if jumlahTugasSelesaiMingguIni > 0 {
 		rataRataStres := float64(totalSkorStres) / float64(jumlahTugasSelesaiMingguIni)
 		fmt.Printf("Rata-rata Skor Stres                 : %.2f\n", rataRataStres)
@@ -270,11 +274,11 @@ func TampilkanSemuaData(A ArrCapaian, n int) {
 		if A[i].IsSelesai {
 			status = "Selesai"
 		}
-		
+
 		// Cetak informasi dasar
-		fmt.Printf("%d. [%s] %s | Tgl: %s | Prioritas: %d\n", 
+		fmt.Printf("%d. [%s] %s | Tgl: %s | Prioritas: %d\n",
 			i+1, status, A[i].NamaTugas, A[i].TanggalSelesai, A[i].TingkatKepentingan)
-		
+
 		// Cetak informasi tambahan jika tugas sudah diselesaikan
 		if A[i].IsSelesai {
 			fmt.Printf("   - Stres: %d/10 | Mood: %d/10\n", A[i].SkorStres, A[i].SkorMood)
@@ -332,9 +336,9 @@ func main() {
 			fmt.Print("\nMasukkan tanggal (YYYYMMDD) yang dicari: ")
 			var target string
 			fmt.Scan(&target)
-            
-			idx := CariBerdasarkanTanggal(&DataCapaian, totalData, target) 
-            
+
+			idx := CariBerdasarkanTanggal(&DataCapaian, totalData, target)
+
 			if idx != -1 {
 				fmt.Printf("Ditemukan! Salah satu tugas di tanggal tersebut adalah: %s\n", DataCapaian[idx].NamaTugas)
 			} else {
