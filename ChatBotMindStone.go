@@ -19,8 +19,63 @@ type Capaian struct {
 
 type ArrCapaian [1000]Capaian
 
-func initDummy(A *ArrCapaian, n int) {
-
+func initDummy(A *ArrCapaian, n *int) {
+	dataDummy := ArrCapaian{
+		{
+			NamaTugas:          "Buat Laporan Mingguan",
+			TingkatKepentingan: 5,
+			TanggalSelesai:     "20260610",
+			IsSelesai:          true,
+			DeskripsiProgres:   "Laporan sudah dibuat dan dikirim ke dosen pembimbing",
+			SkorStres:          7,
+			SkorMood:           6,
+			CatatanPerasaan:    "Lumayan cape",
+		},
+		{
+			NamaTugas:          "Kerjakan Tugas Algoritma",
+			TingkatKepentingan: 3,
+			TanggalSelesai:     "20260612",
+			IsSelesai:          true,
+			DeskripsiProgres:   "Semua fungsi sudah selesai dikerjakan",
+			SkorStres:          9,
+			SkorMood:           5,
+			CatatanPerasaan:    "Aman jaya (fake smile)",
+		},
+		{
+			NamaTugas:          "Belajar Materi Kalkulus",
+			TingkatKepentingan: 4,
+			TanggalSelesai:     "20260613",
+			IsSelesai:          false,
+			DeskripsiProgres:   "",
+			SkorStres:          0,
+			SkorMood:           0,
+			CatatanPerasaan:    "",
+		},
+		{
+			NamaTugas:          "Presentasi Proyek Kelompok",
+			TingkatKepentingan: 5,
+			TanggalSelesai:     "20250614",
+			IsSelesai:          false,
+			DeskripsiProgres:   "",
+			SkorStres:          0,
+			SkorMood:           0,
+			CatatanPerasaan:    "",
+		},
+		{
+			NamaTugas:          "Belajar Resep Masakan Baru",
+			TingkatKepentingan: 2,
+			TanggalSelesai:     "20260607",
+			IsSelesai:          true,
+			DeskripsiProgres:   "Belajar resep nasi goreng kampung hari ini telah selesai dan sukses",
+			SkorStres:          1,
+			SkorMood:           9,
+			CatatanPerasaan:    "Senang banget bisa healing dengan pelajari resep baru.",
+		},
+	}
+	for i := 0; i < 5; i++ {
+		A[i] = dataDummy[i]
+	}
+	*n = 5
 }
 
 // Fungsi pembantu : Membaca string berspasi karakter demi karakter
@@ -296,6 +351,8 @@ func main() {
 	var DataCapaian ArrCapaian
 	var totalData int = 0
 	var pilihan int
+
+	initDummy(&DataCapaian, &totalData)
 
 	for {
 		fmt.Println("\n==================================")
